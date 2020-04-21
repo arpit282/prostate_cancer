@@ -1,0 +1,91 @@
+---
+title: "Prostate Cancer"
+author: "Arpit Singh"
+date: "4/21/2020"
+output: html_document
+---
+
+### Multinomial Logistic Regression
+
+
+```{r}
+library(caret)
+library(nnet)
+library(caTools)
+library(caret)
+library(ggplot2)
+library(ggcorrplot)
+```
+
+### reading the data 
+```{r}
+data <- read.csv("Cardiotocographic.csv")
+names(data)
+head(data)
+sapply(data,class)
+y <- cor(data)
+corr <- round(y,1)  # rounding of values to decimal 
+ggcorrplot(corr,lab = T,lab_size = 3,colors = c("tomato2","blue","springgreen2"),method = "square",type = "lower",hc.order = T,ggtheme = theme_bw())
+```
+
+### converting NSP  to factor
+```{r}
+data$NSP <- as.factor(data$NSP)
+sapply(data,class)
+```
+
+### dividing dataset into train and test data
+```{r}
+id <- sample(2,nrow(data),prob = c(.8,.2),replace = T )
+train <- data[id == 1,]
+test <- data[id == 2,]
+```
+
+
+### setting a refrence variable 
+```{r}
+train$NSP <- relevel(train$NSP,ref = "1")
+```
+
+
+### creating Multinomial model
+```{r}
+fit <- multinom(NSP~.-MLTV-Width-Nzeros-Mode-Median-Mean-Variance-Tendency,train)
+fit
+```
+
+
+### prediction of model
+```{r}
+predi <- predict(fit,test)
+```
+
+### confusionmatrix
+
+```{r}
+confusionMatrix(predi,test$NSP)
+```
+
+### two-tail Z test
+```{r}
+s <- summary(fit)
+t<- table(predi,test$NSP)
+z <- s$coefficients/s$standard.errors
+p <- (1 - pnorm(abs(z),0,1))*2
+p 
+```
+
+
+### predicted probability
+```{r}
+(t/colSums(t))*100
+```
+
+
+### prediction of model
+```{r}
+t
+(t/colSums(t))
+sum(diag(t))/sum(t)*100
+```
+
