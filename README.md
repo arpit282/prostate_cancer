@@ -11,6 +11,20 @@
 
  This project uses the **MULTINOMIAL LOGISTIC REGRESSION **
 
-For more details see [Prostate_predicions](https://rpubs.com/arpit282/602710).
+For more details see https://rpubs.com/arpit282/602710
+
+
+
+In RStudio ( to pull the file) :
+> go to *Tools*
+> then *version controls*
+> then *pull branches*
+
+ 
+ 
+ 
+ 
+ 
+ 
  
 ```
