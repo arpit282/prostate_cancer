@@ -11,7 +11,7 @@
 
  This project uses the **MULTINOMIAL LOGISTIC REGRESSION **
 
-For more details see <a href="https://rpubs.com/arpit282/602710)">prostate_cancer<a/>
+For more details see <a href="https://rpubs.com/arpit282/602710"/>prostate_cancer</a>
 
 
 
